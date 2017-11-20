@@ -3,9 +3,10 @@ title: "Test your API with Cucumber and Ruby!"
 tags: [code, cucumber, bdd, airborne, rspec, ruby, api, development, testing, test automation, automation]
 layout: single
 author_profile: true
+read_time: true
 ---
 
-Have you ever had the epiphany of how great it would be if everyone in the business could help to get your API more tested? Wouldn’t that be just fa-ntastic? I know, right? Not just unit tested, but real life tested.
+How great wouldn't it be to have some kind of API test framework that can use the business domain language to write your tests in? It would result in the possibility of more people across your business being able to contribute to getting the API better tested. With real life scenarios!
 
 Well, I can tell you now, that by the time you’ve finished this intro, you would have the tools to do that! Great, huh?
 
@@ -155,7 +156,7 @@ Let’s write some code to see this test come alive
 # features/step_definitions/hookup.rb
 
 Given("I have set up this project correctly") do
-  # I am letting this just be an empty step
+  # Leaving this step empty for enhanced readability of scenario
 end
 
 When("I add {int} + {int}") do |int, int2|
@@ -249,7 +250,7 @@ end
 
 Then("the response code will be {int}") do |expected_status_code|
   expect_status(expected_status_code)
-End
+end
 {% endhighlight %}
 
 
@@ -258,3 +259,128 @@ End
 Let’s run the code, to see if our tests are passing
 
 <img src="/assets/success_status.png" width="645"/>
+
+Perfect!
+
+But what happens if we would have a failing test? Let's give that a go as well, just to understand what's going on here
+
+Add a scenario to the `features/response-codes.feature`
+
+
+{% highlight gherkin %}
+# features/response-codes.feature
+
+Feature: HTTP status testing with Cucumber and Airborne
+
+Scenario: Get request to httpstat.us/403 will respond with a 403
+  When I do a GET request to httpstat.us/403
+  # force failing the following step
+  Then the response code will be 404
+{% endhighlight %}
+
+What happens when we run this code?
+
+<img src="/assets/failing-response-codes.png" width="645"/>
+
+As you can see, the error message is clean and understandable.
+You were expecting that the response code would be 403, but it the actual result was 404.
+
+## More Examples
+
+Let's take this a bit further. In the following examples, I will use [JSONPlaceholder](https://jsonplaceholder.typicode.com/) for testing purposes.
+
+JSONPlaceholder is a fake Fake Online REST API, and replicates a database with:
+{% highlight terminal %}
+/posts	     100 items
+/comments    500 items
+/albums	     100 items
+/photos	     5000 items
+/todos	     200 items
+/users	     10 items
+{% endhighlight %}
+
+and you can use the normal API methods on all of the objects. Ie:
+
+{% highlight terminal %}
+GET	/posts
+GET	/posts/1
+GET	/posts/1/comments
+GET	/comments?postId=1
+GET	/posts?userId=1
+POST	/posts
+PUT	/posts/1
+PATCH	/posts/1
+DELETE	/posts/1
+{% endhighlight %}
+
+So let's write a scenario. Start with `features/get-posts.feature`
+
+{% highlight gherkin %}
+# features/get-posts.feature
+
+Feature: Get Posts
+
+Scenario: Get all posts
+  Given I have 100 posts in my database
+  When I do a GET request for all posts
+  Then I receive all 100 posts
+{% endhighlight %}
+
+And the ruby code for it:
+
+{% highlight ruby %}
+# features/step_definitions/get-posts.rb
+
+Given("I have 100 posts in my database") do
+  # Leaving this step empty for enhanced readability of scenario
+end
+
+When("I do a GET request for all posts") do
+  get 'https://jsonplaceholder.typicode.com/posts'
+end
+
+Then("I receive all 100 posts") do
+  expect(json_body.size).to be 100
+end
+{% endhighlight %}
+
+Run the feature, and hopefully you'll get the same result
+
+<img src="/assets/get-100-posts.png" width="645"/>
+
+What about verifying the ID of the user who wrote Post 1? That'd be a cool scenario!
+
+Feature file `features/verify-user-id.feature`
+
+{% highlight gherkin %}
+# features/verify-user-id.feature
+
+Feature: Verify User ID of post
+
+Scenario: Verify User ID of post
+  Given I want to keep tr
+  When I do a GET request for all posts
+  Then I receive all 100 posts
+{% endhighlight %}
+
+And ruby code
+
+{% highlight ruby %}
+# features/step_definitions/verify-user-id.rb
+
+Given("the first post is written by user with ID 1") do
+  # Leaving this step empty for enhanced readability of scenario
+end
+
+When("I do a GET request for the first post") do
+ get 'https://jsonplaceholder.typicode.com/posts/1'
+end
+
+Then("the userID is {int}") do |expected_user_id|
+  expect_json(userID: expected_user_id)
+end
+{% endhighlight %}
+
+And voila!
+
+<img src="/assets/user-id.png" width="645"/>
