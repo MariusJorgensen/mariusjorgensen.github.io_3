@@ -1,6 +1,6 @@
 ---
 title: "Start writing API tests in minutes!"
-tags: [code, cucumber, bdd, airborne, rspec, ruby, api, development, testing, test automation, automation, automation in testing]
+#tags: [code, cucumber, bdd, airborne, rspec, ruby, api, development, testing, test automation, automation, automation in testing]
 screenshot_snippet:
   - url: /assets/posts/snippet.png
     image_path: /assets/posts/snippet.png
