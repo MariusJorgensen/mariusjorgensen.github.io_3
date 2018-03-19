@@ -25,13 +25,13 @@ read_time: true
 comments: true
 ---
 
-Wouldn't it be great to have a framework so you can test your API in the your business's domain language?
+Wouldn't it be great to have a framework so you can test your API in your business' domain language?
 
-It could result in more people across your company being able to contribute getting the API better tested. With real life scenarios!
+It could result in more people across your company being able to contribute to testing the API – with real life scenarios!
 
-Or what about helping your team building the right stuff. No more misinterpretation of a new API feature. It's already been planned, and the tests already been written!
+Or what about helping your team building the right stuff. No more misinterpretation of a new API feature. It's already been planned, and the tests have already been written!
 
-Well, I can tell you now, that by the time you’ve finished this quick intro, you have the tools to do that! Great, huh?
+Well, I can tell you now. By the time you’ve finished this quick intro, you'll have all the tools to do that! Great, huh?
 
 ### The Tools
 
