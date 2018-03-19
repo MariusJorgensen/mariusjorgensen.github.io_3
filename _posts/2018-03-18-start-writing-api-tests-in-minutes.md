@@ -411,4 +411,4 @@ And voila!
 
 Try it out! Write your own scenarios, and read more about the abilities of [Airborne](https://github.com/brooklynDev/airborne). It's a lot more than what I have covered in this brief intro. All I can say is that I've found this framework really helpful in the day to day work as a tester in a team focusing on an API.
 
-And please reach out if there's any questions! And all feedback are welcome with much love, as this is my first ever blog post.
+Please reach out if you have any questions! All feedback is welcome with much love, as this is my first ever blog post.
